@@ -1,0 +1,50 @@
+---
+import "../styles/global.css";
+import { APP_ORIGIN } from "../lib/urls";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <header class="site-header">
+      <a class="wordmark" href="/">PMAP</a>
+      <nav aria-label="Primary">
+        <a href="/how/">How it works</a>
+        <a href="/not-legal-advice/">Not legal advice</a>
+        <a class="app-link" href={APP_ORIGIN}>Open the app</a>
+      </nav>
+    </header>
+    <main id="content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div>
+        <a class="wordmark" href="/">PMAP</a>
+        <p>Educational drafts only. Independent counsel before anyone signs.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href={APP_ORIGIN}>App</a>
+        <a href="/not-legal-advice/">Disclaimer</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="https://github.com/premarital-asset-protection">GitHub</a>
+      </nav>
+    </footer>
+  </body>
+</html>

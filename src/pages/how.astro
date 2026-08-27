@@ -1,0 +1,18 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { APP_ORIGIN } from "../lib/urls";
+
+const title = "How PMAP works";
+const description = "Interview, branch, compare a lawyer’s draft privately. App at app.pmap.pro.";
+---
+
+<SiteLayout title={title} description={description}>
+  <h1>How it works</h1>
+  <ol>
+    <li>Consent: this is not legal advice in any jurisdiction.</li>
+    <li>Tell us countries and U.S. states that may govern the marriage or property.</li>
+    <li>Pick a combination of tools — prenup, irrevocable scheduled-payout trust, entity, hygiene — not a false either/or.</li>
+    <li>Generate private drafts. Do not email those files to a lawyer as “the prenup.” Compare their draft and raise gaps in a separate note.</li>
+  </ol>
+  <p><a class="button primary" href={APP_ORIGIN}>Start in the app</a></p>
+</SiteLayout>

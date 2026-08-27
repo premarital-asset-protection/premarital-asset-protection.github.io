@@ -1,0 +1,32 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { APP_ORIGIN } from "../lib/urls";
+
+const title = "Premarital asset protection — drafts, not a law firm";
+const description =
+  "A free interview that helps you think through prenups, irrevocable trusts, and never-shared property. Not legal advice. Open the app at app.pmap.pro.";
+---
+
+<SiteLayout title={title} description={description}>
+  <section class="hero">
+    <p class="fine">Educational product · same property rules for every marriage</p>
+    <h1>Keep never-shared assets never-shared — then have a lawyer write the real instruments.</h1>
+    <p class="lede">
+      Answer questions, branch like a choose-your-own-adventure, and generate private checklists
+      for a prenup, trust funding, and how to talk to counsel without dropping an AI draft on their desk.
+    </p>
+    <div class="actions">
+      <a class="button primary" href={APP_ORIGIN}>Open the app</a>
+      <a class="button" href="/how/">How it works</a>
+    </div>
+    <p class="fine">The interview lives at app.pmap.pro. The JSON API is api.pmap.pro. This site is marketing only.</p>
+  </section>
+  <section>
+    <h2>What this is</h2>
+    <ul class="points">
+      <li>A guided path: consent, forums, inventory, combinations (prenup + trust + hygiene), drafts.</li>
+      <li>Free during MVP. Paid advisor is reserved for later.</li>
+      <li>Not a law firm. Drafts are not enforceable until independent counsel revises and you sign.</li>
+    </ul>
+  </section>
+</SiteLayout>

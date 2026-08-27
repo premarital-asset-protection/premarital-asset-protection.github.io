@@ -1,0 +1,22 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { APP_ORIGIN } from "../lib/urls";
+
+const title = "Not legal advice";
+const description = "PMAP is not a law firm and does not give official legal advice.";
+---
+
+<SiteLayout title={title} description={description}>
+  <h1>Not legal advice</h1>
+  <p>
+    Premarital Asset Protection is educational software. It does not create an attorney-client
+    relationship. Laws differ by forum (for example community property vs equitable distribution;
+    Texas maintenance is not “no alimony”; California prenup timing rules; England and Wales nuptial
+    agreements are not automatically binding).
+  </p>
+  <p>
+    Hire counsel licensed where you marry, live, and own property. Let them draft. Use the app’s
+    output as a private checklist.
+  </p>
+  <p><a href={APP_ORIGIN}>Continue to the app</a> only if you understand the above.</p>
+</SiteLayout>
