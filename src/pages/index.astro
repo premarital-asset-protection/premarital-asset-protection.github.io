@@ -4,16 +4,17 @@ import { APP_ORIGIN } from "../lib/urls";
 
 const title = "Premarital asset protection — drafts, not a law firm";
 const description =
-  "A free interview that helps you think through prenups, irrevocable trusts, and never-shared property. Not legal advice. Open the app at app.pmap.pro.";
+  "A free interview that turns your answers into a disclosure schedule, a prenuptial draft, and a memo written for your attorney. Not legal advice. Open the app at app.pmap.pro.";
 ---
 
 <SiteLayout title={title} description={description}>
   <section class="hero">
     <p class="fine">Educational product · same property rules for every marriage</p>
-    <h1>Keep never-shared assets never-shared — then have a lawyer write the real instruments.</h1>
+    <h1>Work out what you actually own — then have a lawyer write the real instruments.</h1>
     <p class="lede">
-      Answer questions, branch like a choose-your-own-adventure, and generate private checklists
-      for a prenup, trust funding, and how to talk to counsel without dropping an AI draft on their desk.
+      Answer questions, branch like a choose-your-own-adventure, and get a structured pack:
+      a disclosure schedule, a prenuptial draft to read rather than sign, a memo written for
+      your attorney, and a list of the things no agreement can do at all.
     </p>
     <div class="actions">
       <a class="button primary" href={APP_ORIGIN}>Open the app</a>
@@ -21,12 +22,37 @@ const description =
     </div>
     <p class="fine">The interview lives at app.pmap.pro. The JSON API is api.pmap.pro. This site is marketing only.</p>
   </section>
+
   <section>
-    <h2>What this is</h2>
+    <h2>What you get</h2>
     <ul class="points">
-      <li>A guided path: consent, forums, inventory, combinations (prenup + trust + hygiene), drafts.</li>
-      <li>Free during MVP. Paid advisor is reserved for later.</li>
-      <li>Not a law firm. Drafts are not enforceable until independent counsel revises and you sign.</li>
+      <li><strong>A disclosure schedule.</strong> Across every forum we cover, whether each party knew what the other owned is one of the two facts that decide whether an agreement survives. This is that exhibit.</li>
+      <li><strong>A memo for your attorney.</strong> Your matter summary, the issues your answers raise, the execution formalities your forums require, and open questions — each legal proposition cited so counsel can check it or throw it out.</li>
+      <li><strong>A prenuptial draft to read, not to sign.</strong> It exists so you can tell whether the agreement you receive is complete.</li>
+      <li><strong>A post-wedding checklist.</strong> Several parts of a premarital plan only work if they are done <em>after</em> the wedding. That list is where plans usually fail.</li>
+      <li><strong>The gaps in your own answers</strong>, worst first, with the fix for each.</li>
     </ul>
+  </section>
+
+  <section>
+    <h2>What it will not do</h2>
+    <ul class="points">
+      <li>It is not a law firm, and no document it produces has legal effect until independent counsel redrafts it and it is signed properly.</li>
+      <li>It will not help you conceal an asset, backdate an instrument, or move property to defeat a creditor. Those destroy the plan and are the fastest route to losing the agreement.</li>
+      <li>It will not pretend to know a jurisdiction it has not checked. Every forum is covered so none is silently missing, and the ones whose specific rules are unverified say so, in the documents, where you will read it.</li>
+      <li>It cannot waive child support, decide custody, waive a retirement-plan survivor benefit before the wedding, or cancel an immigration affidavit of support. <a href="/limits/">Those limits are real and they are listed.</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>How the drafts are grounded</h2>
+    <p>
+      The interview matches what you type against jurisdiction packs covering all fifty US states,
+      the District of Columbia, and England &amp; Wales, Scotland, Northern Ireland, Ireland, Canada,
+      Australia, New Zealand and Peru, plus a civil-law fallback. Each pack carries its property
+      regime, its execution formalities — witnesses, acknowledgment form, waiting periods, whether
+      independent counsel is a condition of validity — and the statutes or cases behind them.
+    </p>
+    <p class="fine">Free during MVP. Paid advisor is reserved for later.</p>
   </section>
 </SiteLayout>

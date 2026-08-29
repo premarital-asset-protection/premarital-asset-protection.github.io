@@ -3,16 +3,38 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import { APP_ORIGIN } from "../lib/urls";
 
 const title = "How PMAP works";
-const description = "Interview, branch, compare a lawyer’s draft privately. App at app.pmap.pro.";
+const description =
+  "Consent, forums, inventory, tool combinations, drafts, and the steps that only work after the wedding. App at app.pmap.pro.";
 ---
 
 <SiteLayout title={title} description={description}>
   <h1>How it works</h1>
+
   <ol>
-    <li>Consent: this is not legal advice in any jurisdiction.</li>
-    <li>Tell us countries and U.S. states that may govern the marriage or property.</li>
-    <li>Pick a combination of tools — prenup, irrevocable scheduled-payout trust, entity, hygiene — not a false either/or.</li>
-    <li>Generate private drafts. Do not email those files to a lawyer as “the prenup.” Compare their draft and raise gaps in a separate note.</li>
+    <li><strong>Consent.</strong> This is not legal advice in any jurisdiction, and nothing generated here is enforceable. You also choose here whether the pack is written to share with your lawyer or to keep to yourself.</li>
+    <li><strong>Forums.</strong> Tell us the countries and US states that may govern the marriage, the ceremony, where you will live, and where property sits. Land is governed where it sits, and nationality can open a forum nobody planned for.</li>
+    <li><strong>Inventory.</strong> List what you own and what you owe, before you move anything. Tracing evidence dated just before the wedding is worth more than any clause.</li>
+    <li><strong>Combination.</strong> Pick the tools together — prenuptial agreement, irrevocable scheduled-payout trust, entity, account hygiene — rather than as a false either/or. A prenup names interests; it does not fund a trust or form a company.</li>
+    <li><strong>Drafts.</strong> The pack is generated from your answers, with the gaps in those answers shown first. Every document states in its own body which topics it does not cover.</li>
+    <li><strong>After the wedding.</strong> Re-execute retirement-plan spousal consents, update beneficiary designations, record deeds, keep the statements. A premarital agreement cannot do any of these for you.</li>
   </ol>
+
+  <h2>What to hand your attorney</h2>
+  <p>
+    The pack includes a memo written for counsel and a disclosure schedule. Those are the two
+    documents meant to be handed over, and they save billable time. The prenuptial draft is not one
+    of them: it is there so you can work through your attorney's draft clause by clause and raise
+    anything missing in your own words. If you would rather keep the whole pack private, that is a
+    setting on the consent screen.
+  </p>
+
+  <h2>Where your answers go</h2>
+  <p>
+    They become a financial disclosure, so they are treated as one. Your matter is tied to your
+    account, reading the generated pack needs a stronger sign-in than browsing the interview, and
+    nothing is sent to any AI provider unless you allow it, provider by provider.
+    <a href="/privacy/">What is stored, and what is not.</a>
+  </p>
+
   <p><a class="button primary" href={APP_ORIGIN}>Start in the app</a></p>
 </SiteLayout>

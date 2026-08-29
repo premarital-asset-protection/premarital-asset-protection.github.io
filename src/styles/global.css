@@ -42,3 +42,14 @@ main { width: min(100% - 32px, 880px); margin: 2rem auto 0; }
 .button.primary { background: var(--accent); color: #fff; }
 .fine { font-size: 0.9rem; color: var(--muted); }
 ul.points { padding-left: 1.2rem; }
+
+/* Longer-form pages (privacy, hard limits) grew subheadings, ordered lists and
+   dense prose; without these they render as one undifferentiated column. */
+h2 { margin: 2.25rem 0 0.5rem; line-height: 1.25; }
+h3 { margin: 1.5rem 0 0.4rem; font-size: 1.05rem; line-height: 1.3; }
+h2 + p, h3 + p, h2 + ul, h3 + ul { margin-top: 0; }
+p, li { max-width: 42rem; }
+li { margin-bottom: 0.4rem; }
+ol { padding-left: 1.3rem; }
+section + section { margin-top: 2rem; }
+main :is(h1, h2, h3) + .fine { margin-top: -0.25rem; }

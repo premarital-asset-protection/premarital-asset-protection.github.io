@@ -1,11 +1,101 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import { APP_ORIGIN } from "../lib/urls";
 
 const title = "Privacy";
-const description = "What this marketing site collects (nothing).";
+const description =
+  "What this site collects (nothing) and what the interview app stores, who can read it, and what is never sent anywhere.";
+
+// Keep this in step with pmap-lib-core: src/store.rs, src/auth.rs, and
+// migrations/0003_matters_and_documents.sql. If the storage or audit behaviour
+// changes and this page does not, the page is wrong.
+const lastReviewed = "2026-08-28";
 ---
 
 <SiteLayout title={title} description={description}>
   <h1>Privacy</h1>
-  <p>This static marketing site has no analytics tags and no account system. The interview app at app.pmap.pro will have its own privacy notice when persistence ships.</p>
+  <p class="fine">Last reviewed {lastReviewed}</p>
+
+  <p class="lede">
+    What you type into the interview is a financial disclosure — account values, a business
+    valuation, real property, sometimes children's names. It is treated as one.
+  </p>
+
+  <h2>This marketing site</h2>
+  <p>
+    No analytics, no tracking pixels, no cookies, no account, no third-party scripts. It is static
+    files on GitHub Pages. GitHub logs requests to it as any host would; we do not receive or read
+    those logs.
+  </p>
+
+  <h2>The interview app</h2>
+
+  <h3>What is stored</h3>
+  <ul class="points">
+    <li>Your answers, and the path you took through the interview.</li>
+    <li>Snapshots of each generated pack, so "what did it say when I read it" has an answer after the law, the questions, or your answers have moved on.</li>
+    <li>An append-only log of answer changes. A disclosure that changed shortly before a wedding is exactly the fact a court asks about later, and an overwritten field cannot answer it.</li>
+    <li>An audit record of who read, generated, exported or shared a matter, and when. Reads are logged too: for a financial disclosure, "who looked at this" is the interesting question.</li>
+    <li>Your sign-in identity from shared-auth — a stable account identifier, not your password.</li>
+  </ul>
+
+  <h3>Who can read it</h3>
+  <p>
+    Only you. Every matter has an owner, every route that names a matter checks it, and the database
+    enforces the same rule independently with row-level security, so a bug in the service is not by
+    itself enough to expose someone else's disclosure. A request for a matter that is not yours
+    returns "not found" rather than "forbidden", because "forbidden" would confirm the matter
+    exists. Reading or exporting the generated pack requires a stronger and more recent sign-in than
+    browsing the interview does.
+  </p>
+
+  <h3>AI providers</h3>
+  <p>
+    The app can ask several third-party models about your matter. <strong>Nothing is sent unless you
+    allow it, and you allow it one provider at a time.</strong> What goes out is your forums, your
+    balance-sheet totals, your never-shared list and the gaps we found — as text. Your name is
+    included only if you typed it into a field. Those providers are outside this product and are not
+    your lawyer. You can withdraw a provider's permission at any time; that stops future requests, and
+    what a provider has already received is governed by their terms, not ours.
+  </p>
+
+  <h3>Network addresses</h3>
+  <p>
+    Audit records keep an address prefix only — a /24 for IPv4, a /48 for IPv6. That is enough to
+    notice one host enumerating matter identifiers, and not enough to be a location history for
+    someone going through a divorce.
+  </p>
+
+  <h3>What we never do</h3>
+  <ul class="points">
+    <li>Sell your data, or share it with a data broker or an advertiser.</li>
+    <li>Use your matter to train a model, ours or anyone else's.</li>
+    <li>Show your matter to the other party, or to anyone you have not shared it with.</li>
+    <li>Send anything to an AI provider without the per-provider permission described above.</li>
+    <li>Store a password. Sign-in is handled by shared-auth.</li>
+  </ul>
+
+  <h3>Deleting it</h3>
+  <p>
+    You can delete a matter from the app. Deletion removes it from your account and from the
+    interface. Backups roll off on their own schedule, so a deleted matter can persist in a backup
+    for a period after you delete it.
+  </p>
+
+  <h3>Your own copies</h3>
+  <p>
+    The pack can be downloaded as markdown or printed to PDF. Once a file is on your device or in
+    your attorney's inbox, it is outside this product entirely. If the disclosure is sensitive —
+    and it usually is — think about where those copies land before you send them.
+  </p>
+
+  <h2>Questions, and one caveat</h2>
+  <p>
+    This notice describes how the software behaves. It is a description, not a contract, and it has
+    not been reviewed by a lawyer — which, given what this product is, is worth saying plainly.
+    Raise anything through
+    <a href="https://github.com/premarital-asset-protection">the project on GitHub</a>.
+  </p>
+
+  <p><a href={APP_ORIGIN}>Back to the app</a></p>
 </SiteLayout>
