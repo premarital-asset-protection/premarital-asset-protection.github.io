@@ -1,10 +1,14 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { APP_ORIGIN } from "../lib/urls";
+import {
+  APPLICATION_URL,
+  PRE_INTEREST_URL,
+  QUOTE_URL,
+} from "../lib/urls";
 
 const title = "Premarital asset protection — drafts, not a law firm";
 const description =
-  "A free interview that turns your answers into a disclosure schedule, a prenuptial draft, and a memo written for your attorney. Not legal advice. Open the app at app.pmap.pro.";
+  "Start a bounded software quote, register pre-interest, or submit an application at user.pmap.pro. PMAP produces educational planning drafts, not legal advice.";
 ---
 
 <SiteLayout title={title} description={description}>
@@ -17,10 +21,48 @@ const description =
       your attorney, and a list of the things no agreement can do at all.
     </p>
     <div class="actions">
-      <a class="button primary" href={APP_ORIGIN}>Open the app</a>
+      <a class="button primary" href={QUOTE_URL}>Get a planning quote</a>
+      <a class="button" href={PRE_INTEREST_URL}>Register pre-interest</a>
+      <a class="button" href={APPLICATION_URL}>Submit an application</a>
       <a class="button" href="/how/">How it works</a>
     </div>
-    <p class="fine">The interview lives at app.pmap.pro. The JSON API is api.pmap.pro. This site is marketing only.</p>
+    <p class="fine">
+      Customer pages live at user.pmap.pro. Public submissions go only to api.pmap.pro.
+      app.pmap.pro is a compatibility redirect, not a second application authority.
+    </p>
+  </section>
+
+  <section aria-labelledby="intake-heading">
+    <h2 id="intake-heading">Choose the smallest next step</h2>
+    <div class="intake-grid">
+      <article class="intake-card">
+        <h3>Quote</h3>
+        <p>
+          Share a jurisdiction, broad asset band, timeline, and the coordination
+          services you are considering. The result is a bounded software and
+          coordination estimate, not a legal-fee quote.
+        </p>
+        <a href={QUOTE_URL}>Start the quote</a>
+      </article>
+      <article class="intake-card">
+        <h3>Pre-interest</h3>
+        <p>
+          Leave only contact information and service interests. Contact consent
+          is required, and registration does not create an attorney-client
+          relationship or reserve representation.
+        </p>
+        <a href={PRE_INTEREST_URL}>Register pre-interest</a>
+      </article>
+      <article class="intake-card">
+        <h3>Application</h3>
+        <p>
+          Submit high-level planning context for human review. Do not upload or
+          paste identity numbers, account details, credentials, private keys,
+          one-time passwords, or full financial documents.
+        </p>
+        <a href={APPLICATION_URL}>Open the application</a>
+      </article>
+    </div>
   </section>
 
   <section>
