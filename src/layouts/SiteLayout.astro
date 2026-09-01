@@ -1,6 +1,11 @@
 ---
 import "../styles/global.css";
-import { APP_ORIGIN } from "../lib/urls";
+import {
+  APPLICATION_URL,
+  PRE_INTEREST_URL,
+  QUOTE_URL,
+  USER_ORIGIN,
+} from "../lib/urls";
 
 interface Props {
   title: string;
@@ -29,7 +34,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <a href="/how/">How it works</a>
         <a href="/limits/">Hard limits</a>
         <a href="/not-legal-advice/">Not legal advice</a>
-        <a class="app-link" href={APP_ORIGIN}>Open the app</a>
+        <a href={QUOTE_URL}>Quote</a>
+        <a class="app-link" href={USER_ORIGIN}>Start planning</a>
       </nav>
     </header>
     <main id="content">
@@ -41,7 +47,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <p>Educational drafts only. Independent counsel before anyone signs.</p>
       </div>
       <nav aria-label="Footer">
-        <a href={APP_ORIGIN}>App</a>
+        <a href={QUOTE_URL}>Quote</a>
+        <a href={PRE_INTEREST_URL}>Pre-interest</a>
+        <a href={APPLICATION_URL}>Application</a>
         <a href="/how/">How it works</a>
         <a href="/limits/">Hard limits</a>
         <a href="/not-legal-advice/">Disclaimer</a>
