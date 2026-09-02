@@ -12,18 +12,31 @@ const page = (name) =>
  */
 const prose = async (name) => (await page(name)).replace(/\s+/g, " ");
 
-test("header and footer point at the app subdomain", async () => {
+test("customer navigation uses the canonical user subdomain", async () => {
   const urls = await readFile(new URL("../src/lib/urls.ts", import.meta.url), "utf8");
   const layout = await readFile(new URL("../src/layouts/SiteLayout.astro", import.meta.url), "utf8");
-  assert.match(urls, /https:\/\/app\.pmap\.pro/);
-  assert.match(layout, /APP_ORIGIN/);
-  assert.match(layout, /Open the app/);
+  assert.match(urls, /USER_ORIGIN = "https:\/\/user\.pmap\.pro"/);
+  assert.match(urls, /APP_ORIGIN = "https:\/\/app\.pmap\.pro"/);
+  assert.match(urls, /\/quote/);
+  assert.match(urls, /\/pre-interest/);
+  assert.match(urls, /\/apply/);
+  assert.match(layout, /QUOTE_URL/);
+  assert.match(layout, /PRE_INTEREST_URL/);
+  assert.match(layout, /APPLICATION_URL/);
+  assert.match(layout, /Start planning/);
+  assert.doesNotMatch(layout, /APP_ORIGIN/);
 });
 
-test("homepage is not a law firm", async () => {
+test("homepage exposes all three bounded intake choices", async () => {
   const source = await page("index");
-  assert.match(source, /Not a law firm|not a law firm|Not legal advice|not a law firm/i);
-  assert.match(source, /app\.pmap\.pro/);
+  assert.match(source, /Not a law firm|not a law firm|Not legal advice/i);
+  assert.match(source, /QUOTE_URL/);
+  assert.match(source, /PRE_INTEREST_URL/);
+  assert.match(source, /APPLICATION_URL/);
+  assert.match(source, /user\.pmap\.pro/);
+  assert.match(source, /api\.pmap\.pro/);
+  assert.match(source, /compatibility redirect/);
+  assert.match(source, /Do not upload or\s+paste identity numbers/i);
 });
 
 test("every page is reachable from the layout's navigation", async () => {
