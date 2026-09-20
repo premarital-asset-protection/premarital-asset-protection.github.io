@@ -109,6 +109,24 @@ test("the limits page names each thing no agreement can do", async () => {
   }
 });
 
+test("divorce-horizon guidance distinguishes title, classification, and genuine gifts", async () => {
+  const source = await prose("divorce-horizon");
+  for (const [needle, topic] of [
+    [/sole.*title|title.*first question/i, "sole title is not dispositive"],
+    [/real gift.*genuinely separate|genuinely separate property/i, "genuine gift of separate property"],
+    [/nominal gift|side agreement|return arrangement/i, "nominee or return arrangement"],
+    [/Texas/i, "Texas"],
+    [/California/i, "California"],
+    [/Florida/i, "Florida"],
+    [/Peru/i, "Peru"],
+    [/England &amp; Wales|England.*Wales/i, "England and Wales"],
+    [/homestead/i, "homestead restrictions"],
+    [/restraining orders|court order/i, "post-filing transfer restraints"],
+  ]) {
+    assert.match(source, needle, `divorce-horizon page does not cover ${topic}`);
+  }
+});
+
 test("the disclaimer page is honest about unverified jurisdictions", async () => {
   const source = await page("not-legal-advice");
   assert.match(source, /unverified/i);
