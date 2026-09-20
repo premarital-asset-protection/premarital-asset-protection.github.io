@@ -1,0 +1,42 @@
+name: refresh-astro7-lock
+
+on:
+  push:
+    branches: [chore/astro7-security-20260920]
+    paths:
+      - package.json
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-and-verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: chore/astro7-security-20260920
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Refresh lockfile
+        run: npm install --package-lock-only --ignore-scripts
+      - name: Install exact lock
+        run: npm ci
+      - name: Reject high or critical dependency advisories
+        run: npm audit --audit-level=high
+      - name: Run regression tests
+        run: npm test
+      - name: Build Astro site
+        run: npm run build
+      - name: Commit verified lockfile and remove one-shot workflow
+        run: |
+          set -euo pipefail
+          rm .github/workflows/refresh-astro7-lock.yml
+          git config user.name "ORESoftware"
+          git config user.email "alex@oresoftware.com"
+          git add package-lock.json .github/workflows/refresh-astro7-lock.yml
+          git commit -m "chore(deps): refresh lockfile for Astro 7"
+          git push origin HEAD:chore/astro7-security-20260920
