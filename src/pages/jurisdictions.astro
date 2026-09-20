@@ -1,0 +1,73 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { JURISDICTIONS } from "../lib/jurisdictions";
+
+const title = "Jurisdiction matrix — property, title, gifts, and divorce risk";
+const description =
+  "Compare how selected jurisdictions treat sole title, separate property, homestead or matrimonial-home rules, marital agreements, gifts, and divorce-related transfer restrictions.";
+---
+
+<SiteLayout title={title} description={description}>
+  <h1>Jurisdiction matrix: the same transfer can have a different answer in a different forum</h1>
+  <p class="lede">
+    “It is in my name” is never a complete legal analysis. Start with the governing forum, then classify
+    the property, identify any homestead or matrimonial-home rules, check whether an agreement can change
+    the classification, and determine whether a divorce case or injunction already limits transfers.
+  </p>
+
+  <p>
+    This matrix deliberately does <strong>not</strong> demand one rule that works everywhere. It highlights
+    the lawful tools each system actually provides, while marking the point where a transfer becomes
+    vulnerable to joinder rules, equalization, community-property remedies, financial-relief powers,
+    injunctions, or other statutory limits.
+  </p>
+
+  <div class="jurisdiction-grid">
+    {JURISDICTIONS.map((forum) => (
+      <article class="jurisdiction-card" id={forum.slug}>
+        <h2>{forum.name}</h2>
+        <p><strong>Property model:</strong> {forum.property_model}</p>
+        <p><strong>Sole-title warning:</strong> {forum.sole_title_warning}</p>
+        <p><strong>Lawful planning mechanisms:</strong> {forum.lawful_planning}</p>
+        <p><strong>Danger zone:</strong> {forum.danger_zone}</p>
+        <p class="fine"><strong>Last reviewed:</strong> {forum.reviewed}</p>
+        <p class="fine">
+          <strong>Primary sources:</strong>{" "}
+          {forum.sources.map((source, index) => (
+            <>
+              {index > 0 && " · "}
+              <a href={source.url} rel="noreferrer">{source.label}</a>
+            </>
+          ))}
+        </p>
+      </article>
+    ))}
+  </div>
+
+  <section>
+    <h2>A decision tree for a proposed gift or transfer</h2>
+    <ol class="points">
+      <li><strong>Which forum can affect the asset or the divorce?</strong> Residence, domicile, asset location, and the forum hearing the family case can all matter.</li>
+      <li><strong>What is the asset legally classified as?</strong> Separate, community, marital, social, excluded, homestead, matrimonial home, or simply an asset subject to discretionary financial relief are different categories.</li>
+      <li><strong>Does sole title matter here?</strong> Sometimes yes; often only partly; sometimes almost not at all.</li>
+      <li><strong>Is there a spouse-joinder, consent, fiduciary, or registration rule?</strong> Houses receive special treatment in several jurisdictions represented here.</li>
+      <li><strong>Has a divorce case, automatic restraint, injunction, or freezing order already attached?</strong> If so, a transfer that was lawful yesterday may require consent or court authorization today.</li>
+      <li><strong>Is the transfer real?</strong> An outright gift means ownership actually leaves the donor. A side deal to return the asset later creates a materially different nominee or sham-transfer question.</li>
+      <li><strong>What disclosure is required?</strong> A lawful transfer does not excuse a false financial affidavit, discovery response, disclosure schedule, or representation to a court.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Why this is more useful than “never transfer assets before divorce”</h2>
+    <p>
+      Some legal systems give spouses broad power over genuinely separate property. Some permit spouses to
+      convert or partition property by agreement. Some impose special restrictions only on a home. Others
+      focus less on title and more on the court's ability to adjust property or reverse dispositions that
+      defeat financial relief. The correct planning move therefore depends on the legal mechanism actually
+      available in the governing forum.
+    </p>
+  </section>
+
+  <p><a href="/divorce-horizon/">Apply the matrix to a divorce-on-the-horizon transfer.</a></p>
+  <p><a href="/not-legal-advice/">Educational material only; verify current law and facts with independent counsel.</a></p>
+</SiteLayout>
