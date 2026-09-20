@@ -39,6 +39,13 @@ test("homepage exposes all three bounded intake choices", async () => {
   assert.match(source, /Do not upload or\s+paste identity numbers/i);
 });
 
+test("homepage does not imply property law is uniform across jurisdictions", async () => {
+  const source = await prose("index");
+  assert.doesNotMatch(source, /same property rules for every marriage/i);
+  assert.match(source, /jurisdiction-specific property rules/i);
+  assert.match(source, /jurisdictions\//i);
+});
+
 test("every page is reachable from the layout's navigation", async () => {
   const layout = await readFile(new URL("../src/layouts/SiteLayout.astro", import.meta.url), "utf8");
   const files = await readdir(new URL("../src/pages/", import.meta.url));
@@ -127,10 +134,57 @@ test("divorce-horizon guidance distinguishes title, classification, and genuine 
   }
 });
 
-test("the disclaimer page is honest about unverified jurisdictions", async () => {
-  const source = await page("not-legal-advice");
+test("jurisdiction registry requires source links, review dates, and title warnings", async () => {
+  const registry = await readFile(new URL("../src/lib/jurisdictions.ts", import.meta.url), "utf8");
+  for (const forum of [
+    "Texas",
+    "California",
+    "Florida",
+    "New York",
+    "Ontario",
+    "Peru",
+    "England & Wales",
+    "Australia",
+  ]) {
+    assert.match(registry, new RegExp(`name: "${forum.replace("&", "&")}"`), `${forum} is missing`);
+  }
+  assert.match(registry, /sole_title_warning/g);
+  assert.match(registry, /lawful_planning/g);
+  assert.match(registry, /danger_zone/g);
+  assert.match(registry, /reviewed: "2026-09-20"/);
+  const officialHosts = [
+    "statutes.capitol.texas.gov",
+    "leginfo.legislature.ca.gov",
+    "leg.state.fl.us",
+    "nysenate.gov",
+    "ontario.ca",
+    "pj.gob.pe",
+    "legislation.gov.uk",
+    "legislation.gov.au",
+  ];
+  for (const host of officialHosts) {
+    assert.match(registry, new RegExp(host.replaceAll(".", "\\.")), `missing primary-source host ${host}`);
+  }
+});
+
+test("jurisdiction matrix renders the registry and transfer decision tree", async () => {
+  const source = await prose("jurisdictions");
+  assert.match(source, /JURISDICTIONS\.map/);
+  assert.match(source, /Sole-title warning/i);
+  assert.match(source, /Lawful planning mechanisms/i);
+  assert.match(source, /Danger zone/i);
+  assert.match(source, /Last reviewed/i);
+  assert.match(source, /Is the transfer real/i);
+  assert.match(source, /disclosure/i);
+});
+
+test("the disclaimer page is honest about unverified jurisdictions and cross-border conflicts", async () => {
+  const source = await prose("not-legal-advice");
   assert.match(source, /unverified/i);
   assert.match(source, /last reviewed|last review/i);
+  assert.match(source, /Cross-border cases/i);
+  assert.match(source, /Sole title is not a universal ownership rule/i);
+  assert.match(source, /fabricated gifts|secret return agreements/i);
 });
 
 test("no page promises an outcome or claims to be advice", async () => {
