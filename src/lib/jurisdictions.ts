@@ -142,3 +142,62 @@ export const JURISDICTIONS: JurisdictionSnapshot[] = [
     ],
   },
 ];
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+/**
+ * Fail the static build if jurisdiction metadata loses the invariants that make
+ * the public matrix auditable. This validates structure only; it deliberately
+ * does not claim that a reachable URL or syntactically valid review date makes
+ * the underlying legal proposition current or correct.
+ */
+export function assertJurisdictionRegistry(entries: readonly JurisdictionSnapshot[]): void {
+  if (entries.length === 0) throw new Error("jurisdiction registry must not be empty");
+
+  const slugs = new Set<string>();
+  const names = new Set<string>();
+  const today = new Date().toISOString().slice(0, 10);
+
+  for (const entry of entries) {
+    if (!SLUG.test(entry.slug)) throw new Error(`invalid jurisdiction slug: ${entry.slug}`);
+    if (slugs.has(entry.slug)) throw new Error(`duplicate jurisdiction slug: ${entry.slug}`);
+    if (names.has(entry.name)) throw new Error(`duplicate jurisdiction name: ${entry.name}`);
+    slugs.add(entry.slug);
+    names.add(entry.name);
+
+    const requiredText = [
+      ["name", entry.name],
+      ["property_model", entry.property_model],
+      ["sole_title_warning", entry.sole_title_warning],
+      ["lawful_planning", entry.lawful_planning],
+      ["danger_zone", entry.danger_zone],
+    ] as const;
+    for (const [field, value] of requiredText) {
+      if (value.trim().length === 0) throw new Error(`${entry.slug}.${field} must not be empty`);
+    }
+
+    if (!ISO_DATE.test(entry.reviewed)) throw new Error(`${entry.slug}.reviewed must be YYYY-MM-DD`);
+    const reviewed = new Date(`${entry.reviewed}T00:00:00Z`);
+    if (Number.isNaN(reviewed.getTime()) || reviewed.toISOString().slice(0, 10) !== entry.reviewed) {
+      throw new Error(`${entry.slug}.reviewed is not a real calendar date`);
+    }
+    if (entry.reviewed > today) throw new Error(`${entry.slug}.reviewed cannot be in the future`);
+
+    if (entry.sources.length === 0) throw new Error(`${entry.slug} must cite at least one source`);
+    const sourceUrls = new Set<string>();
+    for (const source of entry.sources) {
+      if (source.label.trim().length === 0) throw new Error(`${entry.slug} has a source without a label`);
+      const url = new URL(source.url);
+      if (url.protocol !== "https:") throw new Error(`${entry.slug} source must use HTTPS: ${source.url}`);
+      if (url.username || url.password) throw new Error(`${entry.slug} source URL must not contain credentials`);
+      if (!url.hostname || url.hostname === "localhost") {
+        throw new Error(`${entry.slug} source must use a public hostname: ${source.url}`);
+      }
+      if (sourceUrls.has(url.href)) throw new Error(`${entry.slug} contains duplicate source URL: ${url.href}`);
+      sourceUrls.add(url.href);
+    }
+  }
+}
+
+assertJurisdictionRegistry(JURISDICTIONS);
