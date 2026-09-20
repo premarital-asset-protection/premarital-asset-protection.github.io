@@ -10,9 +10,9 @@
     "test": "node --test tests/*.test.mjs",
     "preview": "astro preview"
   },
-  "dependencies": {
+  "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "astro": "^5.13.0",
+    "astro": "^7.3.3",
     "typescript": "^5.9.2"
   },
   "license": "Apache-2.0"
