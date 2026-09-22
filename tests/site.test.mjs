@@ -134,8 +134,30 @@ test("divorce-horizon guidance distinguishes title, classification, and genuine 
   }
 });
 
+test("post-marriage guidance names statutory planning tools and non-portability", async () => {
+  const source = await prose("post-marriage");
+  for (const [needle, topic] of [
+    [/partition or exchange community property/i, "Texas partition or exchange"],
+    [/income from separate property remain separate/i, "Texas separate-income agreement"],
+    [/transmute community property/i, "California transmutation"],
+    [/agreement made before <em>or during<\/em> marriage|agreement made before.*during.*marriage/i, "New York agreement during marriage"],
+    [/record a separate-property inventory/i, "Nevada recorded inventory"],
+    [/preserve marital-property character inside an irrevocable trust/i, "Nevada trust classification"],
+    [/qualified dispositions and special spousal trusts/i, "South Dakota trust tools"],
+    [/does <strong>not<\/strong> make it portable|not.*portable/i, "jurisdiction non-portability"],
+    [/fraudulent-transfer|defeat an existing creditor|existing claim/i, "anti-evasion guardrail"],
+  ]) {
+    assert.match(source, needle, `post-marriage page does not cover ${topic}`);
+  }
+});
+
 test("jurisdiction registry requires source links, review dates, and title warnings", async () => {
-  const registry = await readFile(new URL("../src/lib/jurisdictions.ts", import.meta.url), "utf8");
+  const baseRegistry = await readFile(new URL("../src/lib/jurisdictions.ts", import.meta.url), "utf8");
+  const postMarriageRegistry = await readFile(
+    new URL("../src/lib/postMarriageJurisdictions.ts", import.meta.url),
+    "utf8",
+  );
+  const registry = `${baseRegistry}\n${postMarriageRegistry}`;
   for (const forum of [
     "Texas",
     "California",
@@ -145,13 +167,15 @@ test("jurisdiction registry requires source links, review dates, and title warni
     "Peru",
     "England & Wales",
     "Australia",
+    "Nevada",
+    "South Dakota",
   ]) {
     assert.match(registry, new RegExp(`name: "${forum.replace("&", "&")}"`), `${forum} is missing`);
   }
   assert.match(registry, /sole_title_warning/g);
   assert.match(registry, /lawful_planning/g);
   assert.match(registry, /danger_zone/g);
-  assert.match(registry, /reviewed: "2026-09-20"/);
+  assert.match(registry, /reviewed: "2026-09-2[01]"/);
   const officialHosts = [
     "statutes.capitol.texas.gov",
     "leginfo.legislature.ca.gov",
@@ -161,15 +185,19 @@ test("jurisdiction registry requires source links, review dates, and title warni
     "pj.gob.pe",
     "legislation.gov.uk",
     "legislation.gov.au",
+    "leg.state.nv.us",
+    "sdlegislature.gov",
   ];
   for (const host of officialHosts) {
     assert.match(registry, new RegExp(host.replaceAll(".", "\\.")), `missing primary-source host ${host}`);
   }
 });
 
-test("jurisdiction matrix renders the registry and transfer decision tree", async () => {
+test("jurisdiction matrix renders the combined registry and transfer decision tree", async () => {
   const source = await prose("jurisdictions");
-  assert.match(source, /JURISDICTIONS\.map/);
+  assert.match(source, /POST_MARRIAGE_JURISDICTIONS/);
+  assert.match(source, /jurisdictions\.map/);
+  assert.match(source, /assertJurisdictionRegistry\(jurisdictions\)/);
   assert.match(source, /Sole-title warning/i);
   assert.match(source, /Lawful planning mechanisms/i);
   assert.match(source, /Danger zone/i);
