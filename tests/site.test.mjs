@@ -144,6 +144,10 @@ test("post-marriage guidance names statutory planning tools and non-portability"
     [/record a separate-property inventory/i, "Nevada recorded inventory"],
     [/preserve marital-property character inside an irrevocable trust/i, "Nevada trust classification"],
     [/qualified dispositions and special spousal trusts/i, "South Dakota trust tools"],
+    [/financial agreement during marriage/i, "Australia during-marriage financial agreement"],
+    [/contract out of the default relationship-property regime/i, "New Zealand contracting-out agreement"],
+    [/change the matrimonial property regime by notarial act/i, "France matrimonial-regime change"],
+    [/switch patrimonial regimes during the marriage/i, "Peru patrimonial-regime substitution"],
     [/does <strong>not<\/strong> make it portable|not.*portable/i, "jurisdiction non-portability"],
     [/fraudulent-transfer|defeat an existing creditor|existing claim/i, "anti-evasion guardrail"],
   ]) {
@@ -169,6 +173,8 @@ test("jurisdiction registry requires source links, review dates, and title warni
     "Australia",
     "Nevada",
     "South Dakota",
+    "New Zealand",
+    "France",
   ]) {
     assert.match(registry, new RegExp(`name: "${forum.replace("&", "&")}"`), `${forum} is missing`);
   }
@@ -187,6 +193,8 @@ test("jurisdiction registry requires source links, review dates, and title warni
     "legislation.gov.au",
     "leg.state.nv.us",
     "sdlegislature.gov",
+    "legislation.govt.nz",
+    "legifrance.gouv.fr",
   ];
   for (const host of officialHosts) {
     assert.match(registry, new RegExp(host.replaceAll(".", "\\.")), `missing primary-source host ${host}`);
