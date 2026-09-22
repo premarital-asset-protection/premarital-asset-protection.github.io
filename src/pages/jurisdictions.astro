@@ -1,10 +1,14 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
-import { JURISDICTIONS } from "../lib/jurisdictions";
+import { assertJurisdictionRegistry, JURISDICTIONS } from "../lib/jurisdictions";
+import { POST_MARRIAGE_JURISDICTIONS } from "../lib/postMarriageJurisdictions";
 
 const title = "Jurisdiction matrix — property, title, gifts, and divorce risk";
 const description =
-  "Compare how selected jurisdictions treat sole title, separate property, homestead or matrimonial-home rules, marital agreements, gifts, and divorce-related transfer restrictions.";
+  "Compare how selected jurisdictions treat sole title, separate property, homestead or matrimonial-home rules, marital agreements, gifts, trusts, and divorce-related transfer restrictions.";
+
+const jurisdictions = [...JURISDICTIONS, ...POST_MARRIAGE_JURISDICTIONS];
+assertJurisdictionRegistry(jurisdictions);
 ---
 
 <SiteLayout title={title} description={description}>
@@ -16,14 +20,15 @@ const description =
   </p>
 
   <p>
-    This matrix deliberately does <strong>not</strong> demand one rule that works everywhere. It highlights
-    the lawful tools each system actually provides, while marking the point where a transfer becomes
-    vulnerable to joinder rules, equalization, community-property remedies, financial-relief powers,
-    injunctions, or other statutory limits.
+    This matrix deliberately does <strong>not</strong> demand one rule that works everywhere. A planning strategy
+    can be included when a real jurisdiction recognizes it, as long as the site names that jurisdiction and does
+    not imply portability. The matrix highlights the lawful tools each system actually provides, while marking the
+    point where a transfer becomes vulnerable to joinder rules, equalization, community-property remedies,
+    financial-relief powers, injunctions, fraudulent-transfer law, or other statutory limits.
   </p>
 
   <div class="jurisdiction-grid">
-    {JURISDICTIONS.map((forum) => (
+    {jurisdictions.map((forum) => (
       <article class="jurisdiction-card" id={forum.slug}>
         <h2>{forum.name}</h2>
         <p><strong>Property model:</strong> {forum.property_model}</p>
@@ -61,13 +66,15 @@ const description =
     <h2>Why this is more useful than “never transfer assets before divorce”</h2>
     <p>
       Some legal systems give spouses broad power over genuinely separate property. Some permit spouses to
-      convert or partition property by agreement. Some impose special restrictions only on a home. Others
-      focus less on title and more on the court's ability to adjust property or reverse dispositions that
-      defeat financial relief. The correct planning move therefore depends on the legal mechanism actually
-      available in the governing forum.
+      convert or partition property by agreement. Some let married people preserve classification through a trust
+      or create an evidentiary record of separate property. Some impose special restrictions only on a home. Others
+      focus less on title and more on the court's ability to adjust property or reverse dispositions that defeat
+      financial relief. The correct planning move therefore depends on the legal mechanism actually available in
+      the governing forum.
     </p>
   </section>
 
+  <p><a href="/post-marriage/">See lawful planning tools that remain available after marriage.</a></p>
   <p><a href="/divorce-horizon/">Apply the matrix to a divorce-on-the-horizon transfer.</a></p>
   <p><a href="/not-legal-advice/">Educational material only; verify current law and facts with independent counsel.</a></p>
 </SiteLayout>
