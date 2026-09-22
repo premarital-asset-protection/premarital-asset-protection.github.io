@@ -43,4 +43,42 @@ export const POST_MARRIAGE_JURISDICTIONS: JurisdictionSnapshot[] = [
       },
     ],
   },
+  {
+    slug: "new-zealand",
+    name: "New Zealand",
+    property_model:
+      "Relationship-property regime with a statutory contracting-out mechanism for spouses and partners.",
+    sole_title_warning:
+      "Legal title alone does not displace the Property (Relationships) Act's classification and division rules.",
+    lawful_planning:
+      "Use a contracting-out agreement under sections 21 and 21F to address the status, ownership, and division of present or future property, with independent legal advice and statutory witnessing/certification formalities.",
+    danger_zone:
+      "Informal side agreements, missing independent advice or certification, or assuming an agreement can be used to conceal property or defeat an existing claim.",
+    reviewed: "2026-09-21",
+    sources: [
+      {
+        label: "Property (Relationships) Act 1976",
+        url: "https://www.legislation.govt.nz/act/public/1976/0166/latest/whole.html",
+      },
+    ],
+  },
+  {
+    slug: "france",
+    name: "France",
+    property_model:
+      "Civil-law matrimonial property regimes that spouses can modify or replace through the statutory notarial process.",
+    sole_title_warning:
+      "Registered or nominal ownership does not by itself answer the matrimonial-regime consequences of an asset or a later change of regime.",
+    lawful_planning:
+      "Article 1397 permits spouses, in the interest of the family, to modify or change their matrimonial regime by notarial act, subject to statutory notice and objection protections.",
+    danger_zone:
+      "Ignoring notice or notarial formalities, prejudicing protected third-party rights, or using a regime change in fraud of creditors.",
+    reviewed: "2026-09-21",
+    sources: [
+      {
+        label: "Code civil art. 1397",
+        url: "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000038584427",
+      },
+    ],
+  },
 ];
